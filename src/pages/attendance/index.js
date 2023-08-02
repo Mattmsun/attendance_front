@@ -36,7 +36,7 @@ const Attendance = () => {
     setAttendance(res.data);
     setLoading(false);
   };
-  // console.log("-----", { userLatitude, userLongitude });
+  console.log("-----", { userLatitude, userLongitude });
   useDidShow(() => {
     getAttendance();
   });
@@ -148,8 +148,8 @@ const Attendance = () => {
     activityLat,
     activityLon
   ) => {
-    setUserLongitude(userLat);
-    setUserLatitude(userLon);
+    setUserLongitude(userLon);
+    setUserLatitude(userLat);
     const currentDistance = getDistance(
       userLat,
       userLon,
