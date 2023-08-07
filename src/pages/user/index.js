@@ -44,22 +44,26 @@ const Index = () => {
     switch (index) {
       case 0:
         Taro.navigateTo({
-          url: "/pages/newActivity/newActivity",
+          // url: "/pages/newActivity/newActivity",
+          url: "/userPackage/pages/newActivity/index",
         });
         break;
       case 1:
         Taro.navigateTo({
-          url: "/pages/editActivity/index",
+          // url: "/pages/editActivity/index",
+          url: "/userPackage/pages/editActivity/index",
         });
         break;
       case 2:
         Taro.navigateTo({
-          url: "/pages/application/index",
+          // url: "/pages/application/index",
+          url: "/userPackage/pages/application/index",
         });
         break;
       case 3:
         Taro.navigateTo({
-          url: "/pages/allRecords/index",
+          // url: "/pages/allRecords/index",
+          url: "/userPackage/pages/allRecords/index",
         });
         break;
       default:
@@ -96,7 +100,7 @@ const Index = () => {
             size="small"
             onClick={() =>
               Taro.navigateTo({
-                url: `/pages/updateUser/index?name=${userInfo.name}&image=${userInfo.avatar}`,
+                url: `/userPackage/pages/updateUser/index?name=${userInfo.name}&image=${userInfo.avatar}`,
               })
             }
           >

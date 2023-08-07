@@ -3,14 +3,43 @@ export default defineAppConfig({
     "pages/index/index",
     "pages/user/index",
     "pages/record/index",
-    "pages/newActivity/newActivity",
-    "pages/updateUser/index",
-    "pages/singleActivity/index",
-    "pages/application/index",
+    // "pages/newActivity/newActivity",
+    // "pages/updateUser/index",
+    // "pages/singleActivity/index",
+    // "pages/application/index",
     "pages/attendance/index",
-    "pages/allRecords/index",
-    "pages/editActivity/index",
-    "pages/userRecord/index",
+    // "pages/allRecords/index",
+    // "pages/editActivity/index",
+    // "pages/userRecord/index",
+  ],
+  preloadRule: {
+    "pages/user/index": {
+      packages: ["userPackage"],
+      network: "all",
+    },
+    "pages/index/index": {
+      packages: ["activityPackage"],
+      network: "all",
+    },
+  },
+  subPackages: [
+    {
+      root: "userPackage",
+      name: "User",
+      pages: [
+        "pages/newActivity/index",
+        "pages/allRecords/index",
+        "pages/updateUser/index",
+        "pages/application/index",
+        "pages/editActivity/index",
+        "pages/userRecord/index",
+      ],
+    },
+    {
+      root: "activityPackage",
+      name: "Activity",
+      pages: ["pages/singleActivity/index", "pages/attendance/index"],
+    },
   ],
   window: {
     backgroundTextStyle: "light",
@@ -57,10 +86,9 @@ export default defineAppConfig({
     // },
   },
   requiredBackgroundModes: ["audio", "location"],
-
+  // defineConstants: {
+  //   LOCATION_APIKEY: JSON.stringify("RDXBZ-6HPWL-RSQP5-EVSPS-PMLMS-ZXFLD"),
+  // },
   // requiredPrivateInfos: ["chooseLocation", "getFuzzyLocation"],
   requiredPrivateInfos: ["getLocation", "chooseLocation"],
-  defineConstants: {
-    LOCATION_APIKEY: JSON.stringify("RDXBZ-6HPWL-RSQP5-EVSPS-PMLMS-ZXFLD"),
-  },
 });

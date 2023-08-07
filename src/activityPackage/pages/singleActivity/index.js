@@ -8,12 +8,12 @@ import {
   CoverImage,
 } from "@tarojs/components";
 import { AtCard, AtButton, AtMessage } from "taro-ui";
-import * as activityApi from "../../api/activity";
+import * as activityApi from "../../../api/activity";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
-import { getFormatDate, AttendanceTime } from "../../utils/date";
-import LoadingToast from "../../components/LoadingToast";
-import center from "../../images/icons/center.png";
-import { handleAtMessage } from "../../utils/message";
+import { getFormatDate, AttendanceTime } from "../../../utils/date";
+import LoadingToast from "../../../components/LoadingToast";
+import center from "../../../images/icons/center.png";
+import { handleAtMessage } from "../../../utils/message";
 import "./index.scss";
 const SingleActivity = () => {
   const [loading, setLoading] = useState(false);
@@ -188,7 +188,7 @@ const SingleActivity = () => {
                 type="primary"
                 onClick={() =>
                   Taro.navigateTo({
-                    url: `/pages/attendance/index?id=${activity.attendanceId}`,
+                    url: `/activityPackage/pages/attendance/index?id=${activity.attendanceId}`,
                   })
                 }
               >

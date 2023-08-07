@@ -1,5 +1,5 @@
 import { View, Button, Text, Image } from "@tarojs/components";
-import userIcon from "../../images/icons/user.png";
+import userIcon from "../../../images/icons/user.png";
 
 var _ = require("lodash");
 
@@ -8,8 +8,8 @@ import React, { useEffect, useState, useMemo } from "react";
 import Taro, { getCurrentPages, useRouter } from "@tarojs/taro";
 
 import "./index.scss";
-import { handleAtMessage } from "../../utils/message";
-import { baseUrl } from "../../utils/baseUrl";
+import { handleAtMessage } from "../../../utils/message";
+import { baseUrl } from "../../../utils/baseUrl";
 
 const updateUserApi = "/api/users";
 

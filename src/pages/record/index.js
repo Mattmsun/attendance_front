@@ -32,7 +32,7 @@ const Record = () => {
 
   const navigateToUserRecord = (id) => {
     Taro.navigateTo({
-      url: `/pages/userRecord/index?id=${id}`,
+      url: `/userPackage/pages/userRecord/index?id=${id}`,
     });
   };
   const onSearch = () => {

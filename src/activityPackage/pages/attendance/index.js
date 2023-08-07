@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
-import * as activityApi from "../../api/activity";
+import * as activityApi from "../../../api/activity";
 
 import { View, Text, Image, Map } from "@tarojs/components";
-import LoadingToast from "../../components/LoadingToast";
-import center from "../../images/icons/center.png";
+import LoadingToast from "../../../components/LoadingToast";
+import center from "../../../images/icons/center.png";
 
 import {
   AtButton,
@@ -14,7 +14,7 @@ import {
   AtModalAction,
   AtCard,
 } from "taro-ui";
-import { getFormatDate } from "../../utils/date";
+import { getFormatDate } from "../../../utils/date";
 
 //in m
 const safeDistance = 300;

@@ -59,6 +59,9 @@ const config = {
       },
     },
   },
+  defineConstants: {
+    LOCATION_APIKEY: JSON.stringify("RDXBZ-6HPWL-RSQP5-EVSPS-PMLMS-ZXFLD"),
+  },
 };
 
 module.exports = function (merge) {

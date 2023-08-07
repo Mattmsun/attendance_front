@@ -1,7 +1,7 @@
 import Taro, { useDidShow } from "@tarojs/taro";
 import React, { useState } from "react";
-import { get } from "../../api/activity";
-import LoadingToast from "../../components/LoadingToast";
+import { get } from "../../../api/activity";
+import LoadingToast from "../../../components/LoadingToast";
 import { View, Image, Text } from "@tarojs/components";
 import {
   AtButton,
@@ -15,9 +15,9 @@ import {
   getFormatDate,
   isActivityEnd,
   isActivityStart,
-} from "../../utils/date";
-import { deleteActivity } from "../../api/user";
-import { handleAtMessage } from "../../utils/message";
+} from "../../../utils/date";
+import { deleteActivity } from "../../../api/user";
+import { handleAtMessage } from "../../../utils/message";
 
 const EditActivity = () => {
   const [loading, setLoading] = useState(false);
@@ -49,7 +49,7 @@ const EditActivity = () => {
       handleAtMessage("活动已删除", "success");
       setTimeout(() => {
         Taro.redirectTo({
-          url: "/pages/editActivity/index",
+          url: "/userPackage/pages/editActivity/index",
         });
       }, 2000);
     } else {
@@ -127,7 +127,7 @@ const EditActivity = () => {
                         size="small"
                         onClick={() =>
                           Taro.navigateTo({
-                            url: `/pages/singleActivity/index?id=${a._id}`,
+                            url: `/activityPackage/pages/singleActivity/index?id=${a._id}`,
                           })
                         }
                       >

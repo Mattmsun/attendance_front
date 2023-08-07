@@ -8,7 +8,7 @@ import {
   CoverImage,
 } from "@tarojs/components";
 
-import center from "../images/icons/center.png";
+import center from "../../../images/icons/center.png";
 import { Picker } from "@tarojs/components";
 
 var _ = require("lodash");
@@ -26,11 +26,11 @@ import {
   AtModalAction,
   AtImagePicker,
   AtMessage,
-  AtGrid,
 } from "taro-ui";
 import React, { useEffect, useState, useMemo } from "react";
 import Taro, { useDidShow, useReady } from "@tarojs/taro";
-import "./activityForm.scss";
+import "./index.scss";
+import { baseUrl } from "../../../utils/baseUrl";
 
 const ActivityForm = () => {
   const [activity, setActivity] = useState({
@@ -86,10 +86,15 @@ const ActivityForm = () => {
     const dd = dateToFormat.getDate();
     const mm = dateToFormat.getMonth() + 1;
     const yyyy = dateToFormat.getFullYear();
-    let formatDate = yyyy + "-" + mm + "-" + dd;
-    if (mm < 10) {
+    let formatDate;
+
+    if (dd < 10 && mm < 10) {
+      formatDate = yyyy + "-0" + mm + "-0" + dd;
+    } else if (dd < 10 && mm >= 10) {
+      formatDate = yyyy + "-" + mm + "-0" + dd;
+    } else if (mm < 10 && dd > 10) {
       formatDate = yyyy + "-0" + mm + "-" + dd;
-    }
+    } else formatDate = yyyy + "-" + mm + "-" + dd;
 
     return formatDate;
   };
@@ -103,6 +108,7 @@ const ActivityForm = () => {
   const onStartDateChange = (e) => {
     const startDate = e.detail.value;
     const endDate = getFormatDate(getDateObject(startDate), true);
+    console.log(endDate);
     setActivity({ ...activity, startDate, endDate });
   };
   const onEndDateChange = (e) => {
@@ -140,16 +146,22 @@ const ActivityForm = () => {
   const uploadImage = (image, formData) => {
     setUploading(true);
     return Taro.uploadFile({
-      url: "http://localhost:8000/api/activities", //仅为示例，非真实的接口地址
+      // url: "http://localhost:8000/api/activities", //仅为示例，非真实的接口地址
+      url: `${baseUrl}/api/activities`,
+
       filePath: image.url,
       name: "image",
       formData,
       success(res) {
         if (res.statusCode === 200) {
           handleAtMessage("成功添加活动", "success");
-          Taro.switchTab({
-            url: "/pages/user/index",
-          });
+          setTimeout(
+            () =>
+              Taro.switchTab({
+                url: "/pages/user/index",
+              }),
+            2000
+          );
         } else handleAtMessage("添加失败", "error");
         // console.log(res);
         //do something
@@ -232,6 +244,7 @@ const ActivityForm = () => {
   return (
     <View>
       <AtMessage />
+
       <View style={{ textAlign: "center" }}>
         <Text style={{ fontSize: "25rpx" }}>
           请添加活动图片, 建议尺寸750*420
@@ -240,6 +253,7 @@ const ActivityForm = () => {
           showAddBtn={showImageBtn()}
           multiple={false}
           length={1}
+          count={1}
           mode="widthFix"
           files={activity.images}
           onChange={onChangeImage}

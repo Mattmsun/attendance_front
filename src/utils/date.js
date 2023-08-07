@@ -5,10 +5,16 @@ export const getFormatDate = (date) => {
   const dd = dateNum.getDate();
   const mm = dateNum.getMonth() + 1;
   const yyyy = dateNum.getFullYear();
-  let formatDate = yyyy + "-" + mm + "-" + dd;
-  if (mm < 10) {
+  let formatDate;
+
+  if (dd < 10 && mm < 10) {
+    formatDate = yyyy + "-0" + mm + "-0" + dd;
+  } else if (dd < 10 && mm >= 10) {
+    formatDate = yyyy + "-" + mm + "-0" + dd;
+  } else if (mm < 10 && dd > 10) {
     formatDate = yyyy + "-0" + mm + "-" + dd;
-  }
+  } else formatDate = yyyy + "-" + mm + "-" + dd;
+
   return formatDate;
 };
 //

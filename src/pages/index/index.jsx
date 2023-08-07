@@ -29,6 +29,7 @@ import {
 } from "../../utils/date";
 import { differenceBy } from "lodash";
 import { handleAtMessage } from "../../utils/message";
+import { baseUrl } from "../../utils/baseUrl";
 
 const index = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -83,10 +84,9 @@ const index = () => {
     login();
     getActivities();
   });
-  // useEffect(() => {
-  //   login();
-  //   getActivities();
-  // }, []);
+  useEffect(() => {
+    console.log(baseUrl);
+  }, []);
   //用户登入
   const login = () => {
     setLoading(true);
@@ -97,7 +97,9 @@ const index = () => {
           if (res.code) {
             //发起网络请求
             Taro.request({
-              url: "http://localhost:8000/api/users/login",
+              // url: "http://localhost:8000/api/users/login",
+              url: `${baseUrl}/api/users/login`,
+
               data: {
                 code: res.code,
               },
@@ -133,19 +135,26 @@ const index = () => {
 
   const unsignedActivity = () => {
     const userActivity = signedActivity.map((a) => a.activity);
-    return differenceBy(activities, userActivity, "_id");
+    const unsignedActivity = differenceBy(activities, userActivity, "_id");
+    return unsignedActivity.filter(
+      (a) => !isActivityStart(a.startDate, a.attendanceStartTime)
+    );
   };
 
   const navigateToActivity = (id) => {
     Taro.navigateTo({
-      url: `/pages/singleActivity/index?id=${id}`,
+      url: `/activityPackage/pages/singleActivity/index?id=${id}`,
     });
   };
   const onChangeSearch = (value) => {
     setSearchValue(value);
   };
   const onSearch = () => {
-    const activity = activities.find((a) => a.name === searchValue);
+    const activity = activities.find(
+      (a) =>
+        a.name === searchValue &&
+        !isActivityStart(a.startDate, a.attendanceStartTime)
+    );
     if (activity) {
       navigateToActivity(activity._id);
     } else {
@@ -153,6 +162,7 @@ const index = () => {
     }
   };
 
+  // console.log(process.env.TARO_APP_API);
   const Admin = () => (
     <View>
       <AtTabs current={current} tabList={adminTabList} onClick={handleTabs}>
@@ -170,11 +180,13 @@ const index = () => {
                 title={a.name}
                 // thumb={a.status === "inactive" ? wrong : correct}
               >
-                <Image
-                  style={{ width: "100%" }}
-                  src={a.activityImage}
-                  mode="widthFix"
-                />
+                <View>
+                  <Image
+                    style={{ width: "100%" }}
+                    src={a.activityImage}
+                    mode="aspectFill"
+                  />
+                </View>
                 <View>
                   <View>
                     <Text>开始日期：{getFormatDate(a.startDate)}</Text>
@@ -191,7 +203,7 @@ const index = () => {
                   type="primary"
                   onClick={() =>
                     Taro.navigateTo({
-                      url: `/pages/singleActivity/index?id=${a._id}`,
+                      url: `/activityPackage/pages/singleActivity/index?id=${a._id}`,
                     })
                   }
                 >
@@ -208,7 +220,7 @@ const index = () => {
                 <Image
                   style={{ width: "100%" }}
                   src={a.activityImage}
-                  mode="widthFix"
+                  mode="aspectFill"
                 />
                 <View>
                   <View>
@@ -227,7 +239,7 @@ const index = () => {
                   type="primary"
                   onClick={() =>
                     Taro.navigateTo({
-                      url: `/pages/singleActivity/index?id=${a._id}`,
+                      url: `/activityPackage/pages/singleActivity/index?id=${a._id}`,
                     })
                   }
                 >
@@ -260,7 +272,7 @@ const index = () => {
                 <Image
                   style={{ width: "100%" }}
                   src={a.activity.activityImage}
-                  mode="widthFix"
+                  mode="aspectFill"
                 />
                 <View>
                   <View>
@@ -292,7 +304,7 @@ const index = () => {
                     }
                     onClick={() =>
                       Taro.navigateTo({
-                        url: `/pages/attendance/index?id=${a._id}`,
+                        url: `/activityPackage/pages/attendance/index?id=${a._id}`,
                       })
                     }
                   >
@@ -318,7 +330,7 @@ const index = () => {
                 <Image
                   style={{ width: "100%" }}
                   src={a.activityImage}
-                  mode="widthFix"
+                  mode="aspectFill"
                 />
                 <View>
                   <View>
@@ -351,12 +363,6 @@ const index = () => {
     <View>
       <AtMessage />
 
-      <AtSearchBar
-        value={searchValue}
-        onChange={onChangeSearch}
-        // focus
-        onActionClick={onSearch}
-      />
       {activities.length !== 0 ? (
         <View>
           <Swiper
@@ -378,120 +384,27 @@ const index = () => {
             ))}
           </Swiper>
           {isAdmin ? <Admin /> : <User />}
-
-          {/* <AtTabs current={current} tabList={tabList} onClick={handleTabs}>
-            <AtTabsPane current={current} index={0}>
-              {signedActivity.map((a) => (
-                <View key={a.activity._id} style={{ marginTop: "20px" }}>
-                  <AtCard
-                    style={{ border: 0 }}
-                    extra={a.status === "inactive" ? "待审核" : "已通过"}
-                    extraStyle={
-                      a.status === "inactive"
-                        ? { color: "red" }
-                        : { color: "green" }
-                    }
-                    title={a.activity.name}
-                    thumb={a.status === "inactive" ? wrong : correct}
-                  >
-                    <Image
-                      style={{ width: "100%" }}
-                      src={a.activity.activityImage}
-                      mode="widthFix"
-                    />
-                    <View>
-                      <View>
-                        <Text>
-                          开始日期：{getFormatDate(a.activity.startDate)}
-                        </Text>
-                      </View>
-                      <View>
-                        <Text>
-                          结束日期：{getFormatDate(a.activity.endDate)}
-                        </Text>
-                      </View>
-                      <View>
-                        <Text>地点：{a.activity.location.name}</Text>
-                      </View>
-                    </View>
-                    {a.status === "inactive" ? (
-                      <AtButton disabled size="small" type="primary">
-                        请与活动方联系
-                      </AtButton>
-                    ) : (
-                      <AtButton
-                        size="small"
-                        type="primary"
-                        disabled={
-                          !AttendanceTime(
-                            a.activity.startDate,
-                            a.activity.endDate,
-                            a.activity.attendanceStartTime,
-                            a.activity.attendanceEndTime,
-                            a.attendance_date
-                          ).status
-                        }
-                        onClick={() =>
-                          Taro.navigateTo({
-                            url: `/pages/attendance/index?id=${a._id}`,
-                          })
-                        }
-                      >
-                        {
-                          AttendanceTime(
-                            a.activity.startDate,
-                            a.activity.endDate,
-                            a.activity.attendanceStartTime,
-                            a.activity.attendanceEndTime,
-                            a.attendance_date
-                          ).message
-                        }
-                      </AtButton>
-                    )}
-                  </AtCard>
-                </View>
-              ))}
-            </AtTabsPane>
-            <AtTabsPane current={current} index={1}>
-              {unsignedActivity().map((a) => (
-                <View key={a._id} style={{ marginTop: "20px" }}>
-                  <AtCard style={{ border: 0 }} title={a.name}>
-                    <Image
-                      style={{ width: "100%" }}
-                      src={a.activityImage}
-                      mode="widthFix"
-                    />
-                    <View>
-                      <View>
-                        <Text>开始日期：{getFormatDate(a.startDate)}</Text>
-                      </View>
-                      <View>
-                        <Text>结束日期：{getFormatDate(a.endDate)}</Text>
-                      </View>
-                      <View>
-                        <Text>地点：{a.location.name}</Text>
-                      </View>
-                    </View>
-
-                    <AtButton
-                      size="small"
-                      type="primary"
-                      onClick={() => navigateToActivity(a._id)}
-                    >
-                      报名参加
-                    </AtButton>
-                  </AtCard>
-                </View>
-              ))}
-            </AtTabsPane>
-          </AtTabs> */}
         </View>
       ) : null}
     </View>
   );
 
   return (
-    <View>{loading ? <LoadingToast isOpened={loading} /> : <Home />}</View>
+    <View>
+      {loading ? (
+        <LoadingToast isOpened={loading} />
+      ) : (
+        <>
+          <AtSearchBar
+            value={searchValue}
+            onChange={onChangeSearch}
+            // focus
+            onActionClick={onSearch}
+          />
+          <Home />
+        </>
+      )}
+    </View>
   );
 };
 

@@ -1,10 +1,14 @@
 import { View, Image, Text } from "@tarojs/components";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import React, { useRef, useState } from "react";
-import { getAllAttendance } from "../../api/user";
-import LoadingToast from "../../components/LoadingToast";
+import { getAllAttendance } from "../../../api/user";
+import LoadingToast from "../../../components/LoadingToast";
 import { AtCard, AtProgress, AtAvatar, AtTabs, AtTabsPane } from "taro-ui";
-import { getFormatDate, isActivityEnd, attendanceRate } from "../../utils/date";
+import {
+  getFormatDate,
+  isActivityEnd,
+  attendanceRate,
+} from "../../../utils/date";
 import "./index.scss";
 let _ = require("lodash");
 

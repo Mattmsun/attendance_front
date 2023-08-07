@@ -1,11 +1,9 @@
 import axios from "axios";
 import { TaroAdapter } from "axios-taro-adapter";
-
-const host_domain = "http://localhost:8000";
-const deploy_domin = "https://lit-temple-63011.herokuapp.com";
+import { baseUrl } from "../utils/baseUrl";
 
 const instance = axios.create({
-  baseURL: host_domain,
+  baseURL: baseUrl,
   timeout: 3000,
   adapter: TaroAdapter, // add this line，添加这一行使用taroAdapter
 });
