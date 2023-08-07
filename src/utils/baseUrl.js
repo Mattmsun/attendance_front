@@ -7,7 +7,7 @@ switch (env) {
 
     break;
   case "production":
-    baseUrlPrefix = "https://www.mattmsun.xyz";
+    baseUrlPrefix = "https://mattmsun.xyz:3000";
     break;
 }
 export const baseUrl = baseUrlPrefix;

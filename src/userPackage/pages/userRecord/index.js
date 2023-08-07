@@ -1,8 +1,8 @@
 import { View, Text } from "@tarojs/components";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import * as activityApi from "../../../api/activity";
-import { AtButton, AtCard, AtProgress, AtSearchBar, AtIndexes } from "taro-ui";
+import { AtButton, AtCard, AtProgress } from "taro-ui";
 import {
   attendanceRate,
   isActivityStart,

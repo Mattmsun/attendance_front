@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  Map,
-  CoverView,
-  CoverImage,
-} from "@tarojs/components";
+import { View, Text, Image, Map } from "@tarojs/components";
 import { AtCard, AtButton, AtMessage } from "taro-ui";
 import * as activityApi from "../../../api/activity";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
@@ -162,11 +155,7 @@ const SingleActivity = () => {
                   longitude={activity.location.longitude}
                   latitude={activity.location.latitude}
                   markers={getMarker()}
-                >
-                  {/* <CoverView className="center-icon-box">
-              <CoverImage className="icon" src={center}></CoverImage>
-            </CoverView> */}
-                </Map>
+                ></Map>
               </View>
             </View>
             {isAdmin ? (
@@ -212,45 +201,6 @@ const SingleActivity = () => {
                 报名参加
               </AtButton>
             )}
-            {/* {isSigned ? (
-              <AtButton
-                disabled={
-                  !AttendanceTime(
-                    activity.startDate,
-                    activity.endDate,
-                    activity.attendanceStartTime,
-                    activity.attendanceEndTime,
-                    activity.attendance_date
-                  ).status
-                }
-                size="small"
-                type="primary"
-                onClick={() =>
-                  Taro.navigateTo({
-                    url: `/pages/attendance/index?id=${a._id}`,
-                  })
-                }
-              >
-                {
-                  AttendanceTime(
-                    activity.startDate,
-                    activity.endDate,
-                    activity.attendanceStartTime,
-                    activity.attendanceEndTime,
-                    activity.attendance_date
-                  ).message
-                }
-              </AtButton>
-            ) : (
-              <AtButton
-                disabled={uploading}
-                size="small"
-                type="primary"
-                onClick={onSignup}
-              >
-                报名参加
-              </AtButton>
-            )} */}
           </AtCard>
         </View>
       ) : null}

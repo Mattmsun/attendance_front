@@ -1,6 +1,6 @@
 import { View, Text } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import * as activityApi from "../../api/activity";
 import {
   AtButton,
@@ -69,22 +69,6 @@ const Record = () => {
     if (admin) getAllUsers();
     else getRecords();
   });
-
-  // const test = () => {
-  //   if (record.length !== 0) {
-  //     console.log("-----", record[4]);
-  //     const a = isActivityStart(
-  //       record[4].activity.startDate,
-  //       record[4].activity.attendanceStartTime
-  //     );
-  //     console.log(Date.now());
-  //     console.log("========", a);
-  //   }
-  // };
-  // test();
-
-  // console.log(record);
-  // console.log(users);
 
   const NoRecord = () => (
     <View
@@ -157,7 +141,7 @@ const Record = () => {
             <AtButton
               onClick={() =>
                 Taro.navigateTo({
-                  url: `/pages/singleActivity/index?id=${r.activity._id}`,
+                  url: `/activityPackage/pages/singleActivity/index?id=${r.activity._id}`,
                 })
               }
               disabled={isActivityEnd(
@@ -217,13 +201,6 @@ const Record = () => {
 
   return (
     <View>
-      {/* {loading ? (
-        <LoadingToast isOpened={loading} />
-      ) : record.length !== 0 ? (
-        <Admin />
-      ) : (
-        <NoRecord />
-      )} */}
       {loading ? (
         <LoadingToast isOpened={loading} />
       ) : isAdmin ? (

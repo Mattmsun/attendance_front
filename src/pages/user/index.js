@@ -8,8 +8,8 @@ import user from "../../images/icons/user.png";
 var _ = require("lodash");
 
 import { AtButton, AtGrid } from "taro-ui";
-import React, { useEffect, useState, useMemo } from "react";
-import Taro, { useDidShow, useReady } from "@tarojs/taro";
+import React, { useState } from "react";
+import Taro, { useDidShow } from "@tarojs/taro";
 import "./index.scss";
 import LoadingToast from "../../components/LoadingToast";
 
@@ -44,25 +44,21 @@ const Index = () => {
     switch (index) {
       case 0:
         Taro.navigateTo({
-          // url: "/pages/newActivity/newActivity",
           url: "/userPackage/pages/newActivity/index",
         });
         break;
       case 1:
         Taro.navigateTo({
-          // url: "/pages/editActivity/index",
           url: "/userPackage/pages/editActivity/index",
         });
         break;
       case 2:
         Taro.navigateTo({
-          // url: "/pages/application/index",
           url: "/userPackage/pages/application/index",
         });
         break;
       case 3:
         Taro.navigateTo({
-          // url: "/pages/allRecords/index",
           url: "/userPackage/pages/allRecords/index",
         });
         break;

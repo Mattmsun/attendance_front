@@ -9,7 +9,6 @@ import { handleAtMessage } from "../../../utils/message";
 import user from "../../../images/icons/user.png";
 import wrong from "../../../images/icons/wrong.png";
 
-AtCard;
 const Application = () => {
   const [applicants, setApplicants] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,7 +30,7 @@ const Application = () => {
         handleAtMessage("已批申请人", "success");
         setTimeout(() => {
           Taro.redirectTo({
-            url: "/pages/application/index",
+            url: "/userPackage/pages/application/index",
           });
         }, 1000);
       } else handleAtMessage("出现错误", "error");
@@ -41,7 +40,7 @@ const Application = () => {
         handleAtMessage("已拒绝申请人", "success");
         setTimeout(() => {
           Taro.redirectTo({
-            url: "/pages/application/index",
+            url: "/userPackage/pages/application/index",
           });
         }, 2000);
       } else handleAtMessage("出现错误", "error");

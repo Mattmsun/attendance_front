@@ -142,7 +142,7 @@ const EditActivity = () => {
                           size="small"
                           onClick={() =>
                             Taro.navigateTo({
-                              url: `/pages/allRecords/index?id=${a._id}`,
+                              url: `/userPackage/pages/allRecords/index?id=${a._id}`,
                             })
                           }
                         >

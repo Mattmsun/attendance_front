@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import * as activityApi from "../../../api/activity";
-
-import { View, Text, Image, Map } from "@tarojs/components";
+import { View, Text, Map } from "@tarojs/components";
 import LoadingToast from "../../../components/LoadingToast";
 import center from "../../../images/icons/center.png";
 
@@ -27,7 +26,7 @@ const Attendance = () => {
   const [userLongitude, setUserLongitude] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [verifyMessage, setVerifyMessage] = useState("");
-
+  const [upLoading, setUpLoading] = useState(false);
   const getAttendance = async () => {
     setLoading(true);
     // return console.log(router.params);
@@ -80,6 +79,8 @@ const Attendance = () => {
           Taro.getLocation({
             type: "gcj02",
             success: function (res) {
+              setUpLoading(true);
+              // console.log(res);
               const { latitude, longitude } = attendance.activity.location;
               processLoaction(res.latitude, res.longitude, latitude, longitude);
             },
@@ -87,6 +88,9 @@ const Attendance = () => {
             //用户拒绝授权
             fail: (res) => {
               isAuthorized();
+            },
+            complete: () => {
+              setUpLoading(false);
             },
           });
         }
@@ -100,6 +104,7 @@ const Attendance = () => {
       content: "需要获取您的位置信息，请允许",
       success: (tip) => {
         if (tip.confirm) {
+          setUpLoading(true);
           Taro.openSetting({
             success: (data) => {
               if (data.authSetting["scope.userLocation"]) {
@@ -107,6 +112,7 @@ const Attendance = () => {
                   success: (res) => {
                     const { latitude, longitude } =
                       attendance.activity.location;
+
                     processLoaction(
                       res.latitude,
                       res.longitude,
@@ -118,6 +124,9 @@ const Attendance = () => {
                   },
                 });
               }
+            },
+            complete: () => {
+              setUpLoading(false);
             },
           });
         } else if (tip.cancel) {
@@ -233,7 +242,12 @@ const Attendance = () => {
                 onTap={openMap}
               ></Map>
             </View>
-            <AtButton size="small" type="primary" onClick={getLocation}>
+            <AtButton
+              size="small"
+              disabled={upLoading}
+              type="primary"
+              onClick={getLocation}
+            >
               签到
             </AtButton>
 

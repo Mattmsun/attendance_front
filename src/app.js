@@ -1,7 +1,5 @@
 import { Component } from "react";
 import "./app.scss";
-// import "taro-ui/dist/style/components/icon.scss";
-// import "./custom-variables.scss";
 
 class App extends Component {
   componentDidMount() {}

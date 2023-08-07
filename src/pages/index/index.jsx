@@ -17,7 +17,6 @@ import * as activity from "../../api/activity";
 import React, { useEffect, useState } from "react";
 
 import "taro-ui/dist/style/components/icon.scss";
-import "./index.scss";
 import "taro-ui/dist/style/components/tabs.scss";
 import Taro, { useDidShow } from "@tarojs/taro";
 import LoadingToast from "../../components/LoadingToast";
@@ -169,17 +168,7 @@ const index = () => {
         <AtTabsPane current={current} index={0}>
           {currentActivity.map((a) => (
             <View key={a._id} style={{ marginTop: "20px" }}>
-              <AtCard
-                style={{ border: 0 }}
-                // extra={a.status === "inactive" ? "待审核" : "已通过"}
-                // extraStyle={
-                //   a.status === "inactive"
-                //     ? { color: "red" }
-                //     : { color: "green" }
-                // }
-                title={a.name}
-                // thumb={a.status === "inactive" ? wrong : correct}
-              >
+              <AtCard style={{ border: 0 }} title={a.name}>
                 <View>
                   <Image
                     style={{ width: "100%" }}
